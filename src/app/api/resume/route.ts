@@ -51,6 +51,7 @@ export async function POST(req: Request) {
 
     return Response.json(resume, { status: 201 })
   } catch (error) {
-    return Response.json({ error: 'Failed to upload resume' }, { status: 500 })
+    console.error('Resume upload error:', error)
+    return Response.json({ error: 'Failed to upload resume', details: error instanceof Error ? error.message : String(error) }, { status: 500 })
   }
 }

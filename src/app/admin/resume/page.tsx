@@ -16,6 +16,7 @@ export default function AdminResumePage() {
   const [resumes, setResumes] = useState<Resume[]>([])
   const [loading, setLoading] = useState(true)
   const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -36,12 +37,15 @@ export default function AdminResumePage() {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
+    setError('')
     try {
       const formData = new FormData()
       formData.append('file', file)
       await api.resume.upload(formData)
       fetchResumes()
-    } catch {} finally {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
       setUploading(false)
     }
   }
@@ -84,6 +88,10 @@ export default function AdminResumePage() {
           </Button>
         </div>
       </motion.div>
+
+      {error && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">{error}</div>
+      )}
 
       {resumes.length === 0 ? (
         <EmptyState
