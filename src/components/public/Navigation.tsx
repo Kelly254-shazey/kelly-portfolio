@@ -57,12 +57,11 @@ export function Navigation() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="relative z-10">
-          <span className="text-xl font-bold tracking-tight">
-            <span className="text-gradient">K</span>
-            <span className="text-gray-900 dark:text-white">elvin</span>
-            <span className="text-gradient">.</span>
+        <Link href="/" className="relative z-10 flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 text-sm font-bold text-white shadow-lg">
+            V
           </span>
+          <span className="text-xl font-bold tracking-tight text-gradient">vidamia</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
