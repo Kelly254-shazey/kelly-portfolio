@@ -79,8 +79,12 @@ export const api = {
   },
   resume: {
     list: () => fetchAPI<import('@/types').Resume[]>('/resume'),
-    upload: (formData: FormData) =>
-      fetch('/api/resume', { method: 'POST', body: formData }).then((r) => r.json()),
+    upload: async (formData: FormData) => {
+      const res = await fetch('/api/resume', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.details || data.error || `Upload failed (${res.status})`)
+      return data
+    },
     update: (id: string, data: Partial<import('@/types').Resume>) =>
       fetchAPI<import('@/types').Resume>(`/resume/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
     delete: (id: string) =>

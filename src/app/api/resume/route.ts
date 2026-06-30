@@ -52,7 +52,11 @@ export async function POST(req: Request) {
     return Response.json(resume, { status: 201 })
   } catch (error) {
     console.error('Resume upload error:', error)
-    const details = error instanceof Error ? error.message : typeof error === 'object' && error !== null ? JSON.stringify(error) : String(error)
+    let details = String(error)
+    try {
+      if (error instanceof Error) details = error.message
+      else if (typeof error === 'object' && error !== null) details = JSON.stringify(error, Object.getOwnPropertyNames(error))
+    } catch {}
     return Response.json({ error: 'Failed to upload resume', details }, { status: 500 })
   }
 }
