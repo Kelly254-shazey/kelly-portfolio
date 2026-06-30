@@ -23,7 +23,7 @@ function toStr(d: Date | null | undefined): string | undefined {
 }
 
 export default async function HomePage() {
-  const [skills, projects, testimonials, blogPosts, achievements, settings] = await Promise.all([
+  const [skills, projects, testimonials, blogPosts, achievements, settings, activeResume] = await Promise.all([
     prisma.skill.findMany({ orderBy: [{ category: 'asc' }, { order: 'asc' }] }),
     prisma.project.findMany({ where: { featured: true }, orderBy: { createdAt: 'desc' } }),
     prisma.testimonial.findMany({ where: { approved: true }, orderBy: { createdAt: 'desc' } }),
@@ -34,13 +34,15 @@ export default async function HomePage() {
     }),
     prisma.achievement.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'desc' }] }),
     prisma.siteSettings.findFirst(),
+    prisma.resume.findFirst({ where: { active: true }, orderBy: { createdAt: 'desc' } }),
   ])
 
   const profilePhotos: string[] = settings?.profilePhotos ? parseJson(settings.profilePhotos) as string[] : []
+  const resumeUrl = activeResume?.url ?? null
 
   return (
     <>
-      <HeroSection profilePhotos={profilePhotos} />
+      <HeroSection profilePhotos={profilePhotos} resumeUrl={resumeUrl} />
       <AboutSection />
       <AchievementsSection achievements={achievements.map(a => ({
         ...a,

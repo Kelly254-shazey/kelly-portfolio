@@ -5,7 +5,7 @@ import { PublicProviders } from '@/components/layout/PublicProviders'
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <PublicProviders>
-      <div className="min-h-screen bg-white dark:bg-dark">
+      <div className="min-h-screen">
         <Navigation />
         <main>{children}</main>
         <Footer />

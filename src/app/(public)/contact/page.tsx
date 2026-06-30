@@ -29,10 +29,10 @@ export default function ContactPage() {
     <div className="min-h-screen pt-24 pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <h1 className="text-4xl font-bold text-white sm:text-5xl">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">
             Get in <span className="text-gradient">Touch</span>
           </h1>
-          <p className="mt-4 text-lg text-gray-400 max-w-2xl">
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
             Have a question, project idea, or just want to connect? I&apos;d love to hear from you.
           </p>
         </motion.div>
@@ -45,20 +45,20 @@ export default function ContactPage() {
               { icon: MessageCircle, label: 'WhatsApp', value: '+254741178450' },
               { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya' },
             ].map((item) => (
-              <div key={item.label} className="glass-card p-4 flex items-center gap-4">
-                <div className="rounded-xl bg-primary-500/10 p-3 text-primary-400"><item.icon className="h-5 w-5" /></div>
-                <div><p className="text-xs text-gray-500">{item.label}</p><p className="text-sm text-gray-300">{item.value}</p></div>
+                <div key={item.label} className="glass-card p-4 flex items-center gap-4">
+                <div className="rounded-xl bg-primary-500/10 dark:bg-primary-500/10 p-3 text-primary-600 dark:text-primary-400"><item.icon className="h-5 w-5" /></div>
+                <div><p className="text-xs text-gray-500">{item.label}</p><p className="text-sm text-gray-700 dark:text-gray-300">{item.value}</p></div>
               </div>
             ))}
             <div className="glass-card p-4">
               <p className="text-xs text-gray-500 mb-3">Social Links</p>
               <div className="flex gap-2">
-                {[
-                  { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
-                  { href: 'https://wa.me/254741178450', icon: MessageCircle },
-                ].map((s, i) => (
-                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="rounded-lg p-2 text-gray-500 hover:text-primary-400 hover:bg-dark-200 transition-all"><s.icon className="h-5 w-5" /></a>
-                ))}
+                  {[
+                    { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
+                    { href: 'https://wa.me/254741178450', icon: MessageCircle },
+                  ].map((s, i) => (
+                    <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="rounded-lg p-2 text-gray-500 dark:text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"><s.icon className="h-5 w-5" /></a>
+                  ))}
               </div>
             </div>
           </motion.div>
@@ -69,8 +69,8 @@ export default function ContactPage() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10">
                   <Send className="h-8 w-8 text-green-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-white">Message Sent Successfully!</h3>
-                <p className="mt-2 text-gray-400">Thank you for reaching out. I&apos;ll get back to you within 24 hours.</p>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Message Sent Successfully!</h3>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">Thank you for reaching out. I&apos;ll get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="glass-card p-6 space-y-4">

@@ -7,8 +7,8 @@ import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 
-function handleDownloadCV() {
-  window.open('/api/resume/download', '_blank')
+function handleDownloadCV(resumeUrl: string) {
+  window.open(resumeUrl, '_blank')
 }
 
 const roles = [
@@ -21,7 +21,7 @@ const roles = [
   'Technology Innovator',
 ]
 
-export function HeroSection({ profilePhotos = [] }: { profilePhotos?: string[] }) {
+export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profilePhotos?: string[]; resumeUrl?: string | null }) {
   const [roleIndex, setRoleIndex] = useState(0)
   const [photoIndex, setPhotoIndex] = useState(0)
 
@@ -90,9 +90,15 @@ export function HeroSection({ profilePhotos = [] }: { profilePhotos?: string[] }
                   Get in Touch
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" icon={<Download className="h-4 w-4" />} onClick={handleDownloadCV}>
-                Download CV
-              </Button>
+              {resumeUrl ? (
+                <Button size="lg" variant="outline" icon={<Download className="h-4 w-4" />} onClick={() => handleDownloadCV(resumeUrl)}>
+                  Download CV
+                </Button>
+              ) : (
+                <Button size="lg" variant="outline" icon={<Download className="h-4 w-4" />} disabled>
+                  Download CV
+                </Button>
+              )}
             </motion.div>
 
             <motion.div
