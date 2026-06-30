@@ -1,35 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
 import { Avatar } from '@/components/ui/Avatar'
-import { api } from '@/lib/api'
 import type { Testimonial } from '@/types'
 
-export function TestimonialsSection() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   const [current, setCurrent] = useState(0)
 
-  useEffect(() => {
-    api.testimonials.list(true)
-      .then(setTestimonials)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [])
+  if (!testimonials.length) return null
 
   const prev = () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1))
   const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1))
-
-  if (loading) return (
-    <section className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-gray-500">Loading...</div>
-    </section>
-  )
-
-  if (error || !testimonials.length) return null
 
   return (
     <section id="testimonials" className="relative py-24 sm:py-32">
@@ -80,6 +63,7 @@ export function TestimonialsSection() {
           <div className="mt-6 flex items-center justify-center gap-4">
             <button
               onClick={prev}
+              aria-label="Previous testimonial"
               className="rounded-xl border border-gray-700 p-2 text-gray-400 hover:text-white hover:border-primary-500 transition-all"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -89,6 +73,7 @@ export function TestimonialsSection() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
                   className={`h-2 w-2 rounded-full transition-all ${
                     i === current ? 'bg-primary-500 w-6' : 'bg-gray-600'
                   }`}
@@ -97,6 +82,7 @@ export function TestimonialsSection() {
             </div>
             <button
               onClick={next}
+              aria-label="Next testimonial"
               className="rounded-xl border border-gray-700 p-2 text-gray-400 hover:text-white hover:border-primary-500 transition-all"
             >
               <ChevronRight className="h-5 w-5" />

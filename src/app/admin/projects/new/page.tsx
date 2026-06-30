@@ -19,6 +19,8 @@ export default function NewProjectPage() {
     content: '',
     category: '',
     technologies: '',
+    images: '',
+    videoUrl: '',
     githubUrl: '',
     liveUrl: '',
     status: 'draft',
@@ -32,6 +34,7 @@ export default function NewProjectPage() {
       await api.projects.create({
         ...form,
         technologies: form.technologies.split(',').map((t) => t.trim()).filter(Boolean),
+        images: form.images.split(',').map((u) => u.trim()).filter(Boolean),
       })
       router.push('/admin/projects')
     } catch {
@@ -123,6 +126,22 @@ export default function NewProjectPage() {
           placeholder="React, Node.js, TypeScript"
           value={form.technologies}
           onChange={(e) => setForm({ ...form, technologies: e.target.value })}
+        />
+
+        <Input
+          label="Image URLs (comma-separated)"
+          id="images"
+          placeholder="https://res.cloudinary.com/..., https://..."
+          value={form.images}
+          onChange={(e) => setForm({ ...form, images: e.target.value })}
+        />
+
+        <Input
+          label="Video URL"
+          id="videoUrl"
+          placeholder="https://res.cloudinary.com/... or https://youtube.com/..."
+          value={form.videoUrl}
+          onChange={(e) => setForm({ ...form, videoUrl: e.target.value })}
         />
 
         <div className="grid gap-4 sm:grid-cols-2">

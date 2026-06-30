@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Send, Mail, MapPin, Phone } from 'lucide-react'
+import { Send, Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input, Textarea } from '@/components/ui/Input'
 
@@ -57,11 +57,12 @@ export function ContactSection() {
             transition={{ duration: 0.5 }}
             className="space-y-6"
           >
-            {[
-              { icon: Mail, label: 'Email', value: 'kelvin@example.com' },
-              { icon: Phone, label: 'Phone', value: '+254 700 000 000' },
-              { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya' },
-            ].map((item) => (
+          {[
+            { icon: Mail, label: 'Email', value: 'kelly123simiyu@gmail.com' },
+            { icon: Phone, label: 'Phone', value: '+254796104666' },
+            { icon: MessageCircle, label: 'WhatsApp', value: '+254741178450' },
+            { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya' },
+          ].map((item) => (
               <div key={item.label} className="flex items-center gap-4 glass-card p-4">
                 <div className="rounded-xl bg-primary-500/10 p-3 text-primary-400">
                   <item.icon className="h-5 w-5" />

@@ -1,12 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { ExternalLink, ChevronRight } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/Icons'
 import { Badge } from '@/components/ui/Badge'
 import Link from 'next/link'
-import { api } from '@/lib/api'
 import type { Project } from '@/types'
 
 const gradients = [
@@ -18,25 +16,8 @@ const gradients = [
   'from-yellow-500/20 to-orange-500/20',
 ]
 
-export function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    api.projects.list({ featured: 'true' })
-      .then(setProjects)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [])
-
-  if (loading) return (
-    <section className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-gray-500">Loading...</div>
-    </section>
-  )
-
-  if (error || !projects.length) return null
+export function ProjectsSection({ projects }: { projects: Project[] }) {
+  if (!projects.length) return null
 
   return (
     <section id="projects" className="relative py-24 sm:py-32">
@@ -84,7 +65,7 @@ export function ProjectsSection() {
                 <h3 className="mb-2 text-lg font-semibold text-white">{project.title}</h3>
                 <p className="mb-4 text-sm text-gray-400 leading-relaxed line-clamp-2">{project.description}</p>
                 <div className="mb-4 flex flex-wrap gap-1.5">
-                  {project.technologies.map((tech) => (
+                  {(project.technologies as string[]).map((tech) => (
                     <Badge key={tech} variant="primary" size="sm">{tech}</Badge>
                   ))}
                 </div>

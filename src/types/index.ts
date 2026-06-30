@@ -117,6 +117,7 @@ export interface SocialLinks {
   twitter?: string
   youtube?: string
   instagram?: string
+  whatsapp?: string
   website?: string
 }
 

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowDown, Download, Mail } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/ui/Icons'
+import { ArrowDown, Download, Mail, MessageCircle } from 'lucide-react'
+import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 
@@ -88,11 +88,10 @@ export function HeroSection() {
               className="flex items-center gap-4"
             >
               <span className="text-sm text-gray-500">Connect:</span>
-              {[
-                { href: 'https://github.com/KellyFlo', icon: GithubIcon },
-                { href: 'https://linkedin.com/in/kelvinsimiyu', icon: LinkedinIcon },
-                { href: 'https://twitter.com/KellyFlo', icon: TwitterIcon },
-              ].map((social) => (
+            {[
+              { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
+              { href: 'https://wa.me/254741178450', icon: MessageCircle },
+            ].map((social) => (
                 <a
                   key={social.href}
                   href={social.href}

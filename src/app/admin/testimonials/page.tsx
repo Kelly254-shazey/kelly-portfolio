@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Plus, Trash2, CheckCircle, XCircle, Star } from 'lucide-react'
+import { Plus, Trash2, Edit2, CheckCircle, XCircle, Star } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input, Textarea } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
@@ -16,6 +16,7 @@ export default function AdminTestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', company: '', role: '', content: '', rating: 5, photo: '' })
   const [saving, setSaving] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
@@ -35,14 +36,32 @@ export default function AdminTestimonialsPage() {
 
   const resetForm = () => {
     setForm({ name: '', company: '', role: '', content: '', rating: 5, photo: '' })
+    setEditingId(null)
     setShowForm(false)
+  }
+
+  const handleEdit = (t: Testimonial) => {
+    setForm({
+      name: t.name,
+      company: t.company || '',
+      role: t.role || '',
+      content: t.content,
+      rating: t.rating,
+      photo: t.photo || '',
+    })
+    setEditingId(t.id)
+    setShowForm(true)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
     try {
-      await api.testimonials.create(form)
+      if (editingId) {
+        await api.testimonials.update(editingId, form)
+      } else {
+        await api.testimonials.create(form)
+      }
       resetForm()
       fetchTestimonials()
     } catch {} finally {
@@ -85,7 +104,7 @@ export default function AdminTestimonialsPage() {
           <h1 className="text-2xl font-bold text-white">Testimonials</h1>
           <p className="text-gray-500 mt-1">Manage client testimonials.</p>
         </div>
-        <Button onClick={() => setShowForm(true)} icon={<Plus className="h-4 w-4" />}>
+        <Button onClick={() => { resetForm(); setShowForm(true) }} icon={<Plus className="h-4 w-4" />}>
           Add Testimonial
         </Button>
       </motion.div>
@@ -97,7 +116,7 @@ export default function AdminTestimonialsPage() {
           onSubmit={handleSubmit}
           className="glass-card p-6 space-y-4"
         >
-          <h3 className="text-lg font-semibold text-white">New Testimonial</h3>
+          <h3 className="text-lg font-semibold text-white">{editingId ? 'Edit Testimonial' : 'New Testimonial'}</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <Input label="Name" id="t-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
             <Input label="Company" id="t-company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
@@ -120,7 +139,7 @@ export default function AdminTestimonialsPage() {
           </div>
           <div className="flex justify-end gap-3">
             <Button variant="secondary" type="button" onClick={resetForm}>Cancel</Button>
-            <Button type="submit" loading={saving}>Save Testimonial</Button>
+            <Button type="submit" loading={saving}>{editingId ? 'Update' : 'Save'} Testimonial</Button>
           </div>
         </motion.form>
       )}
@@ -129,7 +148,7 @@ export default function AdminTestimonialsPage() {
         <EmptyState
           title="No testimonials yet"
           description="Add your first client testimonial."
-          action={<Button onClick={() => setShowForm(true)} icon={<Plus className="h-4 w-4" />}>Add Testimonial</Button>}
+          action={<Button onClick={() => { resetForm(); setShowForm(true) }} icon={<Plus className="h-4 w-4" />}>Add Testimonial</Button>}
         />
       ) : (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card overflow-hidden">
@@ -160,6 +179,9 @@ export default function AdminTestimonialsPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(testimonial)}>
+                        <Edit2 className="h-4 w-4 text-blue-400" />
+                      </Button>
                       <Button variant="ghost" size="sm" onClick={() => handleToggleApproval(testimonial)}>
                         {testimonial.approved
                           ? <XCircle className="h-4 w-4 text-yellow-400" />

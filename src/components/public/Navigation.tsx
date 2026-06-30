@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -30,8 +30,12 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const prevPathname = useRef(pathname)
   useEffect(() => {
-    setIsOpen(false)
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname
+      setIsOpen(false)
+    }
   }, [pathname])
 
   return (

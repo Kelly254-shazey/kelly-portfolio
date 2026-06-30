@@ -25,6 +25,7 @@ export default function AdminSettingsPage() {
     twitter: '',
     youtube: '',
     instagram: '',
+    whatsapp: '',
     primaryColor: '#3b82f6',
     animations: true,
     metaTitle: '',
@@ -46,6 +47,7 @@ export default function AdminSettingsPage() {
         twitter: settings.social?.twitter || '',
         youtube: settings.social?.youtube || '',
         instagram: settings.social?.instagram || '',
+        whatsapp: settings.social?.whatsapp || '',
         primaryColor: settings.theme?.primaryColor || '#3b82f6',
         animations: settings.theme?.animations ?? true,
         metaTitle: settings.seo?.metaTitle || '',
@@ -72,6 +74,7 @@ export default function AdminSettingsPage() {
           twitter: form.twitter,
           youtube: form.youtube,
           instagram: form.instagram,
+          whatsapp: form.whatsapp,
         },
         theme: {
           primaryColor: form.primaryColor,
@@ -127,6 +130,7 @@ export default function AdminSettingsPage() {
               <Input label="Twitter" id="twitter" placeholder="https://twitter.com/..." value={form.twitter} onChange={(e) => setForm({ ...form, twitter: e.target.value })} />
               <Input label="YouTube" id="youtube" placeholder="https://youtube.com/..." value={form.youtube} onChange={(e) => setForm({ ...form, youtube: e.target.value })} />
               <Input label="Instagram" id="instagram" placeholder="https://instagram.com/..." value={form.instagram} onChange={(e) => setForm({ ...form, instagram: e.target.value })} />
+              <Input label="WhatsApp" id="whatsapp" placeholder="https://wa.me/254..." value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} />
             </div>
           </CardContent>
         </Card>

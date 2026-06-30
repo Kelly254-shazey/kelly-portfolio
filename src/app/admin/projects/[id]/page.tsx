@@ -22,6 +22,8 @@ export default function EditProjectPage() {
     content: '',
     category: '',
     technologies: '',
+    images: '',
+    videoUrl: '',
     githubUrl: '',
     liveUrl: '',
     status: 'draft',
@@ -36,6 +38,8 @@ export default function EditProjectPage() {
         content: project.content || '',
         category: project.category,
         technologies: project.technologies.join(', '),
+        images: (project.images as string[]).join(', '),
+        videoUrl: project.videoUrl || '',
         githubUrl: project.githubUrl || '',
         liveUrl: project.liveUrl || '',
         status: project.status,
@@ -51,6 +55,7 @@ export default function EditProjectPage() {
       await api.projects.update(params.id as string, {
         ...form,
         technologies: form.technologies.split(',').map((t) => t.trim()).filter(Boolean),
+        images: form.images.split(',').map((u) => u.trim()).filter(Boolean),
       })
       router.push('/admin/projects')
     } catch {
@@ -140,6 +145,22 @@ export default function EditProjectPage() {
           id="technologies"
           value={form.technologies}
           onChange={(e) => setForm({ ...form, technologies: e.target.value })}
+        />
+
+        <Input
+          label="Image URLs (comma-separated)"
+          id="images"
+          placeholder="https://res.cloudinary.com/..., https://..."
+          value={form.images}
+          onChange={(e) => setForm({ ...form, images: e.target.value })}
+        />
+
+        <Input
+          label="Video URL"
+          id="videoUrl"
+          placeholder="https://res.cloudinary.com/... or https://youtube.com/..."
+          value={form.videoUrl}
+          onChange={(e) => setForm({ ...form, videoUrl: e.target.value })}
         />
 
         <div className="grid gap-4 sm:grid-cols-2">

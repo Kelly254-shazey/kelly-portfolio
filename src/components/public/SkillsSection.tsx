@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api'
 import type { Skill } from '@/types'
 
 function SkillBar({ name, level, index }: { name: string; level: number; index: number }) {
@@ -38,18 +37,7 @@ function SkillBar({ name, level, index }: { name: string; level: number; index: 
   )
 }
 
-export function SkillsSection() {
-  const [skills, setSkills] = useState<Skill[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    api.skills.list()
-      .then(setSkills)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [])
-
+export function SkillsSection({ skills }: { skills: Skill[] }) {
   const grouped = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
     if (!acc[skill.category]) acc[skill.category] = []
     acc[skill.category].push(skill)
@@ -58,13 +46,7 @@ export function SkillsSection() {
 
   const sortedCategories = Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b))
 
-  if (loading) return (
-    <section className="relative py-24 sm:py-32 bg-dark-100/50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-gray-500">Loading...</div>
-    </section>
-  )
-
-  if (error || !sortedCategories.length) return null
+  if (!sortedCategories.length) return null
 
   return (
     <section id="skills" className="relative py-24 sm:py-32 bg-dark-100/50">

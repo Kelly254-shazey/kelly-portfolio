@@ -1,37 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { Calendar, Clock, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import Link from 'next/link'
-import { api } from '@/lib/api'
 import type { BlogPost } from '@/types'
 
-export function BlogSection() {
-  const [posts, setPosts] = useState<(BlogPost & { readTime: string })[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    api.blog.list()
-      .then((data) => {
-        setPosts(data.map((post) => ({
-          ...post,
-          readTime: `${Math.ceil(post.content.length / 1000)} min read`,
-        })))
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [])
-
-  if (loading) return (
-    <section className="relative py-24 sm:py-32 bg-dark-100/50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-gray-500">Loading...</div>
-    </section>
-  )
-
-  if (error || !posts.length) return null
+export function BlogSection({ posts }: { posts: (BlogPost & { readTime: string })[] }) {
+  if (!posts.length) return null
 
   return (
     <section id="blog" className="relative py-24 sm:py-32 bg-dark-100/50">
@@ -80,7 +56,7 @@ export function BlogSection() {
                 </p>
                 <div className="flex items-center gap-4 text-xs text-gray-500">
                   <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> {post.publishedAt?.split('T')[0] || post.createdAt.split('T')[0]}
+                    <Calendar className="h-3 w-3" /> {new Date(post.publishedAt || post.createdAt).toISOString().split('T')[0]}
                   </span>
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" /> {post.readTime}

@@ -1,44 +1,25 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { prisma } from '@/lib/prisma'
+import { notFound } from 'next/navigation'
 import { Calendar, Clock, ArrowLeft } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import { api } from '@/lib/api'
-import type { BlogPost } from '@/types'
 
-export default function BlogPostPage() {
-  const params = useParams()
-  const slug = params.slug as string
-  const [post, setPost] = useState<BlogPost | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+function formatDate(date: Date | string | null | undefined) {
+  if (!date) return ''
+  const d = typeof date === 'string' ? new Date(date) : date
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
 
-  useEffect(() => {
-    if (!slug) return
-    api.blog.get(slug)
-      .then(setPost)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }, [slug])
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
 
-  const readTime = post ? `${Math.ceil(post.content.length / 1000)} min read` : ''
+  const post = await prisma.blogPost.findFirst({
+    where: { OR: [{ slug }, { id: slug }] },
+  })
 
-  const formatDate = (dateStr?: string) => {
-    if (!dateStr) return ''
-    const d = new Date(dateStr)
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-  }
+  if (!post) notFound()
 
-  if (loading) return (
-    <div className="min-h-screen pt-24 pb-16">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center text-gray-500 pt-20">Loading...</div>
-    </div>
-  )
-
-  if (error || !post) return null
+  const readTime = `${Math.ceil(post.content.length / 1000)} min read`
 
   return (
     <div className="min-h-screen pt-24 pb-16">
@@ -47,7 +28,7 @@ export default function BlogPostPage() {
           <ArrowLeft className="h-4 w-4" /> Back to blog
         </Link>
 
-        <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <article>
           <div className="mb-4 flex gap-2">
             <Badge variant="primary">{post.category}</Badge>
           </div>
@@ -55,7 +36,7 @@ export default function BlogPostPage() {
             {post.title}
           </h1>
           <div className="mb-8 flex items-center gap-4 text-sm text-gray-500">
-            <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> {formatDate(post.publishedAt || post.createdAt)}</span>
+            <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> {formatDate(post.publishedAt ?? post.createdAt)}</span>
             <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {readTime}</span>
           </div>
 
@@ -78,7 +59,7 @@ export default function BlogPostPage() {
               return <p key={i}>{paragraph}</p>
             })}
           </div>
-        </motion.article>
+        </article>
       </div>
     </div>
   )

@@ -1,12 +1,11 @@
-import { Mail, Heart } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/ui/Icons'
+import { Mail, Heart, MessageCircle } from 'lucide-react'
+import { GithubIcon } from '@/components/ui/Icons'
 import Link from 'next/link'
 
 const socialLinks = [
-  { href: 'https://github.com/KellyFlo', icon: GithubIcon, label: 'GitHub' },
-  { href: 'https://linkedin.com/in/kelvinsimiyu', icon: LinkedinIcon, label: 'LinkedIn' },
-  { href: 'https://twitter.com/KellyFlo', icon: TwitterIcon, label: 'Twitter' },
-  { href: 'mailto:kelvin@example.com', icon: Mail, label: 'Email' },
+  { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon, label: 'GitHub' },
+  { href: 'mailto:kelly123simiyu@gmail.com', icon: Mail, label: 'Email' },
+  { href: 'https://wa.me/254741178450', icon: MessageCircle, label: 'WhatsApp' },
 ]
 
 export function Footer() {

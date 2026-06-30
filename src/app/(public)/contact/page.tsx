@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Send, Mail, MapPin, Phone } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/ui/Icons'
+import { Send, Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
+import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import { Input, Textarea } from '@/components/ui/Input'
 
@@ -40,8 +40,9 @@ export default function ContactPage() {
         <div className="grid gap-8 lg:grid-cols-3">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
             {[
-              { icon: Mail, label: 'Email', value: 'kelvin@example.com' },
-              { icon: Phone, label: 'Phone', value: '+254 700 000 000' },
+              { icon: Mail, label: 'Email', value: 'kelly123simiyu@gmail.com' },
+              { icon: Phone, label: 'Phone', value: '+254796104666' },
+              { icon: MessageCircle, label: 'WhatsApp', value: '+254741178450' },
               { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya' },
             ].map((item) => (
               <div key={item.label} className="glass-card p-4 flex items-center gap-4">
@@ -52,8 +53,11 @@ export default function ContactPage() {
             <div className="glass-card p-4">
               <p className="text-xs text-gray-500 mb-3">Social Links</p>
               <div className="flex gap-2">
-                {[GithubIcon, LinkedinIcon, TwitterIcon].map((Icon, i) => (
-                  <a key={i} href="#" className="rounded-lg p-2 text-gray-500 hover:text-primary-400 hover:bg-dark-200 transition-all"><Icon className="h-5 w-5" /></a>
+                {[
+                  { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
+                  { href: 'https://wa.me/254741178450', icon: MessageCircle },
+                ].map((s, i) => (
+                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="rounded-lg p-2 text-gray-500 hover:text-primary-400 hover:bg-dark-200 transition-all"><s.icon className="h-5 w-5" /></a>
                 ))}
               </div>
             </div>
