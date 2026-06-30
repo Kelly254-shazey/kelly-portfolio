@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowDown, Download, Mail, MessageCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowDown, Download, Mail, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
@@ -21,8 +21,9 @@ const roles = [
   'Technology Innovator',
 ]
 
-export function HeroSection() {
+export function HeroSection({ profilePhotos = [] }: { profilePhotos?: string[] }) {
   const [roleIndex, setRoleIndex] = useState(0)
+  const [photoIndex, setPhotoIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,6 +31,14 @@ export function HeroSection() {
     }, 3000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (profilePhotos.length < 2) return
+    const interval = setInterval(() => {
+      setPhotoIndex((prev) => (prev + 1) % profilePhotos.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [profilePhotos.length])
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -117,11 +126,55 @@ export function HeroSection() {
           >
             <div className="relative">
               <div className="h-80 w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
-              <div className="absolute inset-4 h-72 w-72 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl font-bold text-gradient">KS</div>
-                  <div className="mt-2 text-sm text-gray-500">Innovator & Builder</div>
-                </div>
+              <div className="absolute inset-4 h-72 w-72 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
+                {profilePhotos.length > 0 ? (
+                  <>
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={photoIndex}
+                        src={profilePhotos[photoIndex]}
+                        alt="Profile"
+                        className="h-full w-full object-cover rounded-full"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    </AnimatePresence>
+                    {profilePhotos.length > 1 && (
+                      <>
+                        <button
+                          onClick={() => setPhotoIndex((prev) => (prev - 1 + profilePhotos.length) % profilePhotos.length)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-dark-900/60 p-1.5 text-white hover:bg-dark-900/80 transition-colors"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setPhotoIndex((prev) => (prev + 1) % profilePhotos.length)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-dark-900/60 p-1.5 text-white hover:bg-dark-900/80 transition-colors"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                          {profilePhotos.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setPhotoIndex(i)}
+                              className={`h-1.5 rounded-full transition-all ${
+                                i === photoIndex ? 'w-4 bg-primary-400' : 'w-1.5 bg-white/40'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div className="text-center">
+                    <div className="text-6xl font-bold text-gradient">KS</div>
+                    <div className="mt-2 text-sm text-gray-500">Innovator & Builder</div>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

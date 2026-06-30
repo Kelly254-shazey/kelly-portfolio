@@ -7,6 +7,7 @@ function serializeSettings(s: any) {
     social: typeof s.social === 'string' ? JSON.parse(s.social) : s.social ?? {},
     theme: typeof s.theme === 'string' ? JSON.parse(s.theme) : s.theme ?? {},
     seo: typeof s.seo === 'string' ? JSON.parse(s.seo) : s.seo ?? {},
+    profilePhotos: typeof s.profilePhotos === 'string' ? JSON.parse(s.profilePhotos) : s.profilePhotos ?? [],
   }
 }
 
@@ -31,6 +32,11 @@ export async function PUT(req: Request) {
     const existing = await prisma.siteSettings.findFirst()
 
     const data: Record<string, unknown> = { ...body }
+    if (body.profilePhotos) {
+      data.profilePhotos = JSON.stringify(body.profilePhotos)
+    } else if (body.profilePhotos === null) {
+      data.profilePhotos = '[]'
+    }
     if (body.social) {
       const existingSocial = existing?.social ? JSON.parse(typeof existing.social === 'string' ? existing.social : JSON.stringify(existing.social)) : {}
       data.social = JSON.stringify({ ...existingSocial, ...body.social })

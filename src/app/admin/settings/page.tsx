@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Save, Loader2 } from 'lucide-react'
+import { Save, Loader2, Upload, Trash2, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input, Textarea } from '@/components/ui/Input'
 import { Card, CardContent } from '@/components/ui/Card'
@@ -13,7 +13,9 @@ import type { SiteSettings } from '@/types'
 export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [uploadingPhoto, setUploadingPhoto] = useState(false)
   const [form, setForm] = useState({
+    profilePhotos: [] as string[],
     siteName: '',
     title: '',
     bio: '',
@@ -36,6 +38,7 @@ export default function AdminSettingsPage() {
   useEffect(() => {
     api.settings.get().then((settings) => {
       setForm({
+        profilePhotos: settings.profilePhotos || [],
         siteName: settings.siteName || '',
         title: settings.title || '',
         bio: settings.bio || '',
@@ -56,6 +59,25 @@ export default function AdminSettingsPage() {
       })
     }).catch(() => {}).finally(() => setLoading(false))
   }, [])
+
+  const handleUploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingPhoto(true)
+    try {
+      const formData = new FormData()
+      formData.append('files', file)
+      formData.append('folder', 'portfolio/profile')
+      const res = await fetch('/api/media/upload', { method: 'POST', body: formData })
+      if (!res.ok) throw new Error('Upload failed')
+      const uploaded = await res.json()
+      const url = uploaded[0]?.url
+      if (url) setForm({ ...form, profilePhotos: [...form.profilePhotos, url] })
+    } catch {} finally {
+      setUploadingPhoto(false)
+      e.target.value = ''
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -173,6 +195,38 @@ export default function AdminSettingsPage() {
               <Input label="Google Analytics ID" id="googleAnalyticsId" placeholder="G-XXXXXXXXXX" value={form.googleAnalyticsId} onChange={(e) => setForm({ ...form, googleAnalyticsId: e.target.value })} />
               <Textarea label="Meta Description" id="metaDescription" value={form.metaDescription} onChange={(e) => setForm({ ...form, metaDescription: e.target.value })} className="sm:col-span-2" />
             </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-white">Profile Photos</h2>
+              <label className="cursor-pointer">
+                <input type="file" accept="image/*" onChange={handleUploadPhoto} className="hidden" />
+                <Button type="button" loading={uploadingPhoto} icon={<Upload className="h-4 w-4" />} as="span">
+                  Add Photo
+                </Button>
+              </label>
+            </div>
+            {form.profilePhotos.length === 0 ? (
+              <p className="text-sm text-gray-500">No photos yet. Upload up to 3 profile photos for the hero carousel.</p>
+            ) : (
+              <div className="flex flex-wrap gap-4">
+                {form.profilePhotos.map((url, i) => (
+                  <div key={i} className="relative group">
+                    <img src={url} alt={`Photo ${i + 1}`} className="h-24 w-24 rounded-full object-cover border-2 border-gray-700" />
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, profilePhotos: form.profilePhotos.filter((_, j) => j !== i) })}
+                      className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 

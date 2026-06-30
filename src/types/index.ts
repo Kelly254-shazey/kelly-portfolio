@@ -105,6 +105,7 @@ export interface SiteSettings {
   phone?: string
   location?: string
   avatar?: string
+  profilePhotos: string[]
   resumeUrl?: string
   social: SocialLinks
   theme: ThemeSettings
