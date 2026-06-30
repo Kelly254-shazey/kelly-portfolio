@@ -104,7 +104,7 @@ export default function AdminResumePage() {
           }
         />
       ) : (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card overflow-hidden">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-700/50">

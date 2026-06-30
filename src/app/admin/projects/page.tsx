@@ -148,7 +148,7 @@ export default function AdminProjectsPage() {
           action={<Button onClick={() => router.push('/admin/projects/new')} icon={<Plus className="h-4 w-4" />}>New Project</Button>}
         />
       ) : view === 'table' ? (
-        <motion.div variants={container} initial="hidden" animate="show" className="glass-card overflow-hidden">
+        <motion.div variants={container} initial="hidden" animate="show" className="glass-card overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-700/50">

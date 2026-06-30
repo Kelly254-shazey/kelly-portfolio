@@ -122,11 +122,11 @@ export function HeroSection({ profilePhotos = [] }: { profilePhotos?: string[] }
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:flex items-center justify-center"
+            className="flex items-center justify-center"
           >
             <div className="relative">
-              <div className="h-80 w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
-              <div className="absolute inset-4 h-72 w-72 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
+              <div className="h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
+              <div className="absolute inset-2 sm:inset-3 lg:inset-4 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
                 {profilePhotos.length > 0 ? (
                   <>
                     <AnimatePresence mode="wait">

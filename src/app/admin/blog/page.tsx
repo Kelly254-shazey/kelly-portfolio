@@ -106,7 +106,7 @@ export default function AdminBlogPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card overflow-hidden"
+          className="glass-card overflow-x-auto"
         >
           <table className="w-full">
             <thead>
