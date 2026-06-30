@@ -1,5 +1,12 @@
 import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function GET() {
   try {
@@ -25,10 +32,19 @@ export async function POST(req: Request) {
       return Response.json({ error: 'No file provided' }, { status: 400 })
     }
 
+    const buffer = Buffer.from(await file.arrayBuffer())
+    const result = await new Promise<any>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'portfolio/resume', resource_type: 'auto' },
+        (err, result) => (err ? reject(err) : resolve(result))
+      )
+      stream.end(buffer)
+    })
+
     const resume = await prisma.resume.create({
       data: {
         name: file.name,
-        url: `/uploads/${file.name}`,
+        url: result.secure_url,
         version,
       },
     })

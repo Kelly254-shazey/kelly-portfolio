@@ -7,6 +7,10 @@ import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 
+function handleDownloadCV() {
+  window.open('/api/resume/download', '_blank')
+}
+
 const roles = [
   'Software Engineer',
   'AI & ML Enthusiast',
@@ -76,7 +80,7 @@ export function HeroSection() {
                   Get in Touch
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" icon={<Download className="h-4 w-4" />}>
+              <Button size="lg" variant="outline" icon={<Download className="h-4 w-4" />} onClick={handleDownloadCV}>
                 Download CV
               </Button>
             </motion.div>

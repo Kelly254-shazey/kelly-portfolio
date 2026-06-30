@@ -48,11 +48,7 @@ export default function AdminResumePage() {
 
   const handleToggleActive = async (resume: Resume) => {
     try {
-      await fetch('/api/resume', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: resume.id, active: !resume.active }),
-      })
+      await api.resume.update(resume.id, { active: !resume.active })
       setResumes(resumes.map((r) => (r.id === resume.id ? { ...r, active: !r.active } : r)))
     } catch {}
   }

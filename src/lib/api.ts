@@ -81,6 +81,8 @@ export const api = {
     list: () => fetchAPI<import('@/types').Resume[]>('/resume'),
     upload: (formData: FormData) =>
       fetch('/api/resume', { method: 'POST', body: formData }).then((r) => r.json()),
+    update: (id: string, data: Partial<import('@/types').Resume>) =>
+      fetchAPI<import('@/types').Resume>(`/resume/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
     delete: (id: string) =>
       fetchAPI<void>(`/resume/${id}`, { method: 'DELETE' }),
   },
