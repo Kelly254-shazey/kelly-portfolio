@@ -24,9 +24,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div className="text-center sm:text-left">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-8 w-8 object-contain" />
-              <span className="text-xl font-bold tracking-tight text-gradient">vidamia</span>
+            <Link href="/" className="inline-flex items-center gap-3">
+              <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
+              <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">vidamia</span>
             </Link>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-500 max-w-xs mx-auto sm:mx-0">
               Building the future through code, AI, and innovation.

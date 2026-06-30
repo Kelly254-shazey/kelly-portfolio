@@ -10,7 +10,7 @@ export function BlogSection({ posts }: { posts: (BlogPost & { readTime: string }
   if (!posts.length) return null
 
   return (
-    <section id="blog" className="relative py-16 sm:py-20 lg:py-28 bg-dark-100/50 overflow-hidden">
+    <section id="blog" className="relative py-16 sm:py-20 lg:py-28 bg-light-50 dark:bg-dark-100/50 overflow-hidden">
       <div className="section-gradient">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div

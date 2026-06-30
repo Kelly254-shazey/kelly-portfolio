@@ -49,7 +49,7 @@ export function SkillsSection({ skills }: { skills: Skill[] }) {
   if (!sortedCategories.length) return null
 
   return (
-    <section id="skills" className="relative py-16 sm:py-20 lg:py-28 bg-dark-100/50 overflow-hidden">
+    <section id="skills" className="relative py-16 sm:py-20 lg:py-28 bg-light-50 dark:bg-dark-100/50 overflow-hidden">
       <div className="section-gradient">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div

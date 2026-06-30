@@ -29,7 +29,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-white">Dashboard Overview</h1>
-        <p className="text-gray-500 mt-1">Welcome back, Vidamia. Here&apos;s what&apos;s happening.</p>
+        <p className="text-gray-500 mt-1">Welcome back, Kelvin. Here&apos;s what&apos;s happening.</p>
       </motion.div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

@@ -13,11 +13,11 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Vidamia | Software Engineer & Innovator',
-  description: 'Portfolio of Vidamia — Software Engineering, AI/ML, Robotics, and Technology Innovation.',
-  keywords: ['software engineer', 'AI', 'machine learning', 'robotics', 'portfolio', 'Vidamia'],
+  title: 'Kelvin Simiyu | Software Engineer & Innovator',
+  description: 'Portfolio of Kelvin Simiyu — Software Engineering, AI/ML, Robotics, and Technology Innovation.',
+  keywords: ['software engineer', 'AI', 'machine learning', 'robotics', 'portfolio', 'Kelvin Simiyu'],
   openGraph: {
-    title: 'Vidamia | Software Engineer & Innovator',
+    title: 'Kelvin Simiyu | Software Engineer & Innovator',
     description: 'Building the future through code, AI, and innovation.',
     type: 'website',
   },
