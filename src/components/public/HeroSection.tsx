@@ -65,7 +65,7 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
                 <span className="text-gray-500 dark:text-gray-400">Hi, I&apos;m</span>
                 <br />
-                <span className="text-gradient-hero">Kelvin Simiyu</span>
+                <span className="text-gradient-hero">Vidamia</span>
               </h1>
               <div className="h-14">
                 <span className="text-2xl sm:text-3xl text-gradient-animate font-semibold">
@@ -132,8 +132,8 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
             className="flex items-center justify-center"
           >
             <div className="relative">
-              <div className="h-48 w-48 sm:h-64 sm:w-64 lg:h-80 lg:w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
-              <div className="absolute inset-2 sm:inset-3 lg:inset-4 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
+              <div className="h-36 w-36 sm:h-52 sm:w-52 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
+              <div className="absolute inset-1.5 sm:inset-2.5 md:inset-3 lg:inset-4 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
                 {profilePhotos.length > 0 ? (
                   <>
                     <AnimatePresence mode="wait">

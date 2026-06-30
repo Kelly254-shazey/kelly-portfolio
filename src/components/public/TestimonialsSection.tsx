@@ -15,7 +15,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
   const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1))
 
   return (
-    <section id="testimonials" className="relative py-24 sm:py-32">
+    <section id="testimonials" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden">
       <div className="section-gradient">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div

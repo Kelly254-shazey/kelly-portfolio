@@ -56,7 +56,7 @@ export function Navigation() {
           : 'bg-transparent'
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
         <Link href="/" className="relative z-10 flex items-center gap-2">
           <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-8 w-8 object-contain" />
           <span className="text-xl font-bold tracking-tight text-gradient">vidamia</span>

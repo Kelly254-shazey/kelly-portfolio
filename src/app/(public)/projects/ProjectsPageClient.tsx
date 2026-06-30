@@ -23,7 +23,7 @@ export function ProjectsPageClient({ projects }: { projects: Project[] }) {
   })
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-20 sm:pt-24 pb-12 sm:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">Projects</h1>
@@ -41,12 +41,12 @@ export function ProjectsPageClient({ projects }: { projects: Project[] }) {
               className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-200/50 pl-10 pr-4 py-2.5 text-sm text-gray-700 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500/50 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
             />
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide sm:flex-wrap">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                className={`shrink-0 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === cat
                     ? 'bg-primary-500/10 dark:bg-primary-500/20 text-primary-700 dark:text-primary-400 border border-primary-500/30'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200 border border-gray-300 dark:border-gray-700'

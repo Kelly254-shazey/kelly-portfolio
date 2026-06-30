@@ -22,7 +22,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const readTime = `${Math.ceil(post.content.length / 1000)} min read`
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-20 sm:pt-24 pb-12 sm:pb-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <Link href="/blog" className="mb-8 inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
           <ArrowLeft className="h-4 w-4" /> Back to blog

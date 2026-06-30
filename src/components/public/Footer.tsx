@@ -14,10 +14,9 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
           <div className="text-center md:text-left">
-            <span className="text-xl font-bold tracking-tight">
-              <span className="text-gradient">K</span>
-              <span className="text-gray-900 dark:text-white">elvin</span>
-              <span className="text-gradient">.</span>
+            <span className="flex items-center gap-2">
+              <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-7 w-7 object-contain" />
+              <span className="text-xl font-bold tracking-tight text-gradient">vidamia</span>
             </span>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">
               Building the future through code, AI, and innovation.
@@ -42,7 +41,7 @@ export function Footer() {
 
         <div className="mt-8 border-t border-gray-200 dark:border-white/5 pt-6 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-500 flex items-center justify-center gap-1 flex-wrap">
-            &copy; {new Date().getFullYear()} Kelvin Simiyu. Built with <Heart className="h-3.5 w-3.5 text-red-500" /> and Next.js.
+            &copy; {new Date().getFullYear()} Vidamia. Built with <Heart className="h-3.5 w-3.5 text-red-500" /> and Next.js.
           </p>
         </div>
       </div>

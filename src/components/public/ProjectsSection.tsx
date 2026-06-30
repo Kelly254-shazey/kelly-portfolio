@@ -20,7 +20,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
   if (!projects.length) return null
 
   return (
-    <section id="projects" className="relative py-24 sm:py-32">
+    <section id="projects" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden">
       <div className="section-gradient">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div

@@ -19,7 +19,7 @@ const ideas = [
 
 export default function ResearchPage() {
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-20 sm:pt-24 pb-12 sm:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">
