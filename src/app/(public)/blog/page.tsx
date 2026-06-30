@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import type { BlogPost } from '@/types'
 import { BlogPageClient } from './BlogPageClient'
 
+export const dynamic = 'force-dynamic'
+
 function parseJson(val: unknown) {
   if (typeof val === 'string') {
     try { return JSON.parse(val) } catch { return val }

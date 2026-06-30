@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { ProjectsPageClient } from './ProjectsPageClient'
 
+export const dynamic = 'force-dynamic'
+
 function serializeArray(val: unknown) {
   if (typeof val === 'string') {
     try { return JSON.parse(val) } catch { return val }

@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import type { Skill, Project, Testimonial, BlogPost } from '@/types'
 import { HeroSection } from '@/components/public/HeroSection'
+
+export const dynamic = 'force-dynamic'
 import { AboutSection } from '@/components/public/AboutSection'
 import { SkillsSection } from '@/components/public/SkillsSection'
 import { ProjectsSection } from '@/components/public/ProjectsSection'
