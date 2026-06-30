@@ -1,15 +1,16 @@
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function POST(req: Request) {
   const session = await auth()
   if (!session) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME
-  const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET
-  if (!cloudName || !uploadPreset) {
-    return Response.json({ error: 'Cloudinary not configured' }, { status: 500 })
-  }
 
   try {
     const formData = await req.formData()
@@ -18,22 +19,14 @@ export async function POST(req: Request) {
 
     const uploaded = await Promise.all(
       files.map(async (file) => {
-        const uploadFormData = new FormData()
-        uploadFormData.append('file', file)
-        uploadFormData.append('upload_preset', uploadPreset)
-        uploadFormData.append('folder', folder)
-
-        const uploadRes = await fetch(
-          `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
-          { method: 'POST', body: uploadFormData }
-        )
-
-        if (!uploadRes.ok) {
-          const errBody = await uploadRes.text()
-          throw new Error(`Cloudinary: ${errBody}`)
-        }
-
-        const result = await uploadRes.json()
+        const buffer = Buffer.from(await file.arrayBuffer())
+        const result = await new Promise<any>((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder, resource_type: 'auto' },
+            (err, result) => (err ? reject(err) : resolve(result))
+          )
+          stream.end(buffer)
+        })
 
         return prisma.media.create({
           data: {
