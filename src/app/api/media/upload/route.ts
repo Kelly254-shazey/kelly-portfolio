@@ -42,6 +42,12 @@ export async function POST(req: Request) {
 
     return Response.json(uploaded, { status: 201 })
   } catch (error) {
-    return Response.json({ error: 'Failed to upload files' }, { status: 500 })
+    console.error('Media upload error:', error)
+    let details = String(error)
+    try {
+      if (error instanceof Error) details = error.message
+      else if (typeof error === 'object' && error !== null) details = JSON.stringify(error, Object.getOwnPropertyNames(error))
+    } catch {}
+    return Response.json({ error: 'Failed to upload files', details }, { status: 500 })
   }
 }
