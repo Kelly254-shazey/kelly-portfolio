@@ -22,22 +22,11 @@ const navLinks = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [hiddenNav, setHiddenNav] = useState(false)
-  const lastScrollY = useRef(0)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY
-      setScrolled(currentY > 50)
-      if (currentY > 100) {
-        setHiddenNav(currentY > lastScrollY.current)
-      } else {
-        setHiddenNav(false)
-      }
-      lastScrollY.current = currentY
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -50,13 +39,10 @@ export function Navigation() {
     }
   }, [pathname])
 
-  const navVisible = isOpen || !hiddenNav
-
   return (
     <nav
       className={cn(
-        'fixed top-0 z-40 w-full transition-all duration-500',
-        navVisible ? 'translate-y-0' : '-translate-y-full',
+        'fixed top-0 z-40 w-full transition-all duration-300',
         isOpen
           ? 'bg-white dark:bg-dark-100 border-b border-gray-200 dark:border-white/5 shadow-lg'
           : scrolled
