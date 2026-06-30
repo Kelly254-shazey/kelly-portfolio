@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Search, ExternalLink } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/Icons'
 import { Badge } from '@/components/ui/Badge'
+import Link from 'next/link'
 import type { Project } from '@/types'
 
 const categories = ['All', 'AI/ML', 'Robotics', 'Web', 'Mobile', 'DevOps', 'Research']
@@ -74,33 +75,38 @@ export function ProjectsPageClient({ projects }: { projects: Project[] }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="group relative overflow-hidden rounded-2xl border border-gray-200/50 dark:border-white/5 bg-white/60 dark:bg-dark-200/50 p-6 transition-all duration-300 hover:border-primary-500/30 hover:shadow-xl hover:-translate-y-1"
               >
-                <div className="mb-2 flex items-center justify-between">
-                  <Badge variant="primary" size="sm">{project.category}</Badge>
-                  <span className="text-xs text-gray-500 dark:text-gray-500">
-                    {new Date(project.createdAt).getFullYear()}
-                  </span>
-                </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h3>
-                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{project.description}</p>
-                <div className="mb-4 flex flex-wrap gap-1.5">
-                  {(project.technologies as string[]).map((tech) => (
-                    <Badge key={tech} variant="default" size="sm">{tech}</Badge>
-                  ))}
-                </div>
-                <div className="flex items-center gap-3">
-                  {project.githubUrl && (
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-                      <GithubIcon className="h-3.5 w-3.5" /> Source
-                    </a>
-                  )}
-                  {project.liveUrl && (
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-                      <ExternalLink className="h-3.5 w-3.5" /> Live Demo
-                    </a>
-                  )}
-                </div>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group block relative overflow-hidden rounded-2xl border border-gray-200/50 dark:border-white/5 bg-white/60 dark:bg-dark-200/50 p-6 transition-all duration-300 hover:border-primary-500/30 hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="mb-2 flex items-center justify-between">
+                    <Badge variant="primary" size="sm">{project.category}</Badge>
+                    <span className="text-xs text-gray-500 dark:text-gray-500">
+                      {new Date(project.createdAt).getFullYear()}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{project.title}</h3>
+                  <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{project.description}</p>
+                  <div className="mb-4 flex flex-wrap gap-1.5">
+                    {(project.technologies as string[]).map((tech) => (
+                      <Badge key={tech} variant="default" size="sm">{tech}</Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <GithubIcon className="h-3.5 w-3.5" /> Source
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <ExternalLink className="h-3.5 w-3.5" /> Live Demo
+                      </a>
+                    )}
+                    <span className="ml-auto text-xs text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity">View details →</span>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>

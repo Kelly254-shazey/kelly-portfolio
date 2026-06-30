@@ -16,6 +16,7 @@ const navLinks = [
   { href: '/research', label: 'Research' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
+  { href: '/support', label: 'Support' },
 ]
 
 export function Navigation() {
@@ -38,15 +39,6 @@ export function Navigation() {
     }
   }, [pathname])
 
-  const navClasses = (isActive: boolean, isMobile?: boolean) => cn(
-    'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
-    isActive
-      ? 'text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-500/10'
-      : isMobile
-        ? 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-200 w-full'
-        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200'
-  )
-
   return (
     <nav
       className={cn(
@@ -67,7 +59,12 @@ export function Navigation() {
             <Link
               key={link.href}
               href={link.href}
-              className={navClasses(pathname === link.href)}
+              className={cn(
+                'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
+                pathname === link.href
+                  ? 'text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-500/10'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200'
+              )}
             >
               {link.label}
             </Link>
@@ -106,21 +103,27 @@ export function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-0 bg-black/20 dark:bg-black/40 md:hidden"
+              className="fixed inset-0 z-30 bg-black/40 md:hidden"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="relative z-10 bg-white/90 dark:bg-dark-100/90 backdrop-blur-xl border-b border-gray-200 dark:border-white/5 md:hidden"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 z-40 h-full w-64 bg-white/95 dark:bg-dark-100/95 backdrop-blur-2xl border-l border-gray-200 dark:border-white/5 shadow-2xl md:hidden pt-20"
             >
-              <div className="space-y-1 px-4 pb-4 pt-2">
+              <div className="flex flex-col gap-1 px-4 pb-8">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={navClasses(pathname === link.href, true)}
+                    className={cn(
+                      'rounded-xl px-4 py-3 text-base font-medium transition-all duration-200',
+                      pathname === link.href
+                        ? 'text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-500/10 border border-primary-500/20'
+                        : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-200 border border-transparent'
+                    )}
                   >
                     {link.label}
                   </Link>

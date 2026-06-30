@@ -4,11 +4,12 @@ import { motion } from 'framer-motion'
 import { FileText, Lightbulb, Eye, BookOpen, ExternalLink } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
+import Link from 'next/link'
 
 const researchPapers = [
-  { title: 'Neural Network Optimization for Embedded Systems', venue: 'IEEE Conference on AI', year: '2025', status: 'Published', type: 'paper' },
-  { title: 'Reinforcement Learning in Autonomous Navigation', venue: 'ICRA', year: '2024', status: 'Published', type: 'paper' },
-  { title: 'Transfer Learning for Low-Resource Languages', venue: 'ACL Workshop', year: '2024', status: 'Under Review', type: 'paper' },
+  { slug: 'neural-network-optimization-for-embedded-systems', title: 'Neural Network Optimization for Embedded Systems', venue: 'IEEE Conference on AI', year: '2025', status: 'Published', type: 'paper' },
+  { slug: 'reinforcement-learning-in-autonomous-navigation', title: 'Reinforcement Learning in Autonomous Navigation', venue: 'ICRA', year: '2024', status: 'Published', type: 'paper' },
+  { slug: 'transfer-learning-for-low-resource-languages', title: 'Transfer Learning for Low-Resource Languages', venue: 'ACL Workshop', year: '2024', status: 'Under Review', type: 'paper' },
 ]
 
 const ideas = [
@@ -38,17 +39,18 @@ export default function ResearchPage() {
           <div className="space-y-4">
             {researchPapers.map((paper, index) => (
               <motion.div
-                key={paper.title}
+                key={paper.slug}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-5 flex flex-col sm:flex-row items-start justify-between gap-4 group hover:border-primary-500/30 transition-all"
               >
-                <div className="flex-1">
-                  <h3 className="text-gray-900 dark:text-white font-semibold mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{paper.title}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-500">{paper.venue} &middot; {paper.year}</p>
-                </div>
-                <Badge variant={paper.status === 'Published' ? 'success' : 'warning'}>{paper.status}</Badge>
+                <Link href={`/research/${paper.slug}`} className="glass-card p-5 flex flex-col sm:flex-row items-start justify-between gap-4 group hover:border-primary-500/30 transition-all block">
+                  <div className="flex-1">
+                    <h3 className="text-gray-900 dark:text-white font-semibold mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{paper.title}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">{paper.venue} &middot; {paper.year}</p>
+                  </div>
+                  <Badge variant={paper.status === 'Published' ? 'success' : 'warning'}>{paper.status}</Badge>
+                </Link>
               </motion.div>
             ))}
           </div>

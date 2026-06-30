@@ -54,45 +54,37 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group glass-card hover-lift overflow-hidden"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className="relative p-6">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/10 text-primary-600 dark:text-primary-400">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+                <Link href={`/projects/${project.slug}`} className="group block glass-card hover-lift overflow-hidden">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className="relative p-6">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/10 text-primary-600 dark:text-primary-400">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{project.title}</h3>
+                    <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">{project.description}</p>
+                    <div className="mb-4 flex flex-wrap gap-1.5">
+                      {(project.technologies as string[]).map((tech) => (
+                        <Badge key={tech} variant="primary" size="sm">{tech}</Badge>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {project.githubUrl && (
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                          <GithubIcon className="h-3.5 w-3.5" /> Source
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                          <ExternalLink className="h-3.5 w-3.5" /> Live Demo
+                        </a>
+                      )}
+                      <span className="ml-auto text-xs text-primary-600 dark:text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity">View details →</span>
+                    </div>
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h3>
-                  <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">{project.description}</p>
-                  <div className="mb-4 flex flex-wrap gap-1.5">
-                    {(project.technologies as string[]).map((tech) => (
-                      <Badge key={tech} variant="primary" size="sm">{tech}</Badge>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-                      >
-                        <GithubIcon className="h-3.5 w-3.5" /> Source
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-                      >
-                        <ExternalLink className="h-3.5 w-3.5" /> Live Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
