@@ -50,8 +50,8 @@ export function Navigation() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
         <Link href="/" className="relative z-10 flex items-center gap-3 sm:gap-4">
-          <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-11 w-11 sm:h-14 sm:w-14 object-contain drop-shadow-lg" />
-          <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient">vidamia</span>
+          <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-14 w-14 sm:h-16 sm:w-16 object-contain drop-shadow-lg" />
+          <span className="text-3xl sm:text-4xl font-bold tracking-tight text-gradient">vidamia</span>
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">

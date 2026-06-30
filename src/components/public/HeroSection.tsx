@@ -132,7 +132,7 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
             className="flex items-center justify-center"
           >
             <div className="relative">
-              <div className="h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
+              <div className="h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72 lg:h-96 lg:w-96 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-600/20 animate-pulse-glow" />
               <div className="absolute inset-2 sm:inset-2.5 md:inset-3 lg:inset-4 rounded-full bg-gradient-to-br from-primary-500/30 to-primary-600/30 backdrop-blur-3xl flex items-center justify-center overflow-hidden">
                 {profilePhotos.length > 0 ? (
                   <>
