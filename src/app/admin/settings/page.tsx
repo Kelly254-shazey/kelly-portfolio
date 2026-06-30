@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Save, Loader2, Upload, Trash2, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input, Textarea } from '@/components/ui/Input'
@@ -14,6 +14,7 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [uploadingPhoto, setUploadingPhoto] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
   const [form, setForm] = useState({
     profilePhotos: [] as string[],
     siteName: '',
@@ -202,12 +203,10 @@ export default function AdminSettingsPage() {
           <CardContent>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">Profile Photos</h2>
-              <label className="cursor-pointer">
-                <input type="file" accept="image/*" onChange={handleUploadPhoto} className="hidden" />
-                <Button type="button" loading={uploadingPhoto} icon={<Upload className="h-4 w-4" />} as="span">
+              <input ref={photoInputRef} type="file" accept="image/*" onChange={handleUploadPhoto} className="hidden" />
+                <Button type="button" loading={uploadingPhoto} icon={<Upload className="h-4 w-4" />} onClick={() => photoInputRef.current?.click()}>
                   Add Photo
                 </Button>
-              </label>
             </div>
             {form.profilePhotos.length === 0 ? (
               <p className="text-sm text-gray-500">No photos yet. Upload up to 3 profile photos for the hero carousel.</p>
