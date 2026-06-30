@@ -22,12 +22,23 @@ const navLinks = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hiddenNav, setHiddenNav] = useState(false)
+  const lastScrollY = useRef(0)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      const currentY = window.scrollY
+      setScrolled(currentY > 50)
+      if (currentY > 100) {
+        setHiddenNav(currentY > lastScrollY.current)
+      } else {
+        setHiddenNav(false)
+      }
+      lastScrollY.current = currentY
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -39,13 +50,18 @@ export function Navigation() {
     }
   }, [pathname])
 
+  const navVisible = isOpen || !hiddenNav
+
   return (
     <nav
       className={cn(
-        'fixed top-0 z-40 w-full transition-all duration-300',
-        scrolled
-          ? 'bg-white/70 dark:bg-dark-100/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 shadow-sm'
-          : 'bg-transparent'
+        'fixed top-0 z-40 w-full transition-all duration-500',
+        navVisible ? 'translate-y-0' : '-translate-y-full',
+        isOpen
+          ? 'bg-white dark:bg-dark-100 border-b border-gray-200 dark:border-white/5 shadow-lg'
+          : scrolled
+            ? 'bg-white/70 dark:bg-dark-100/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 shadow-sm'
+            : 'bg-transparent'
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
@@ -103,7 +119,7 @@ export function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-30 bg-black/40 md:hidden"
+              className="fixed inset-0 z-30 bg-black/50 md:hidden"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -111,7 +127,7 @@ export function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 z-40 h-full w-64 bg-white/95 dark:bg-dark-100/95 backdrop-blur-2xl border-l border-gray-200 dark:border-white/5 shadow-2xl md:hidden pt-20"
+              className="fixed top-0 right-0 z-40 h-full w-72 bg-white dark:bg-dark-100 border-l border-gray-200 dark:border-white/5 shadow-2xl md:hidden pt-20"
             >
               <div className="flex flex-col gap-1 px-4 pb-8">
                 {navLinks.map((link) => (
@@ -119,10 +135,10 @@ export function Navigation() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      'rounded-xl px-4 py-3 text-base font-medium transition-all duration-200',
+                      'rounded-xl px-4 py-3.5 text-base font-medium transition-all duration-200',
                       pathname === link.href
                         ? 'text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-500/10 border border-primary-500/20'
-                        : 'text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-200 border border-transparent'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-200 border border-transparent'
                     )}
                   >
                     {link.label}
