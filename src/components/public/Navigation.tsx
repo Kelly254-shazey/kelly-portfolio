@@ -58,9 +58,7 @@ export function Navigation() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="relative z-10 flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 text-sm font-bold text-white shadow-lg">
-            V
-          </span>
+          <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamia" className="h-8 w-8 object-contain" />
           <span className="text-xl font-bold tracking-tight text-gradient">vidamia</span>
         </Link>
 
