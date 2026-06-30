@@ -1,10 +1,11 @@
 import { prisma } from '@/lib/prisma'
-import type { Skill, Project, Testimonial, BlogPost } from '@/types'
+import type { Skill, Project, Testimonial, BlogPost, Achievement } from '@/types'
 import { HeroSection } from '@/components/public/HeroSection'
 
 export const dynamic = 'force-dynamic'
 import { AboutSection } from '@/components/public/AboutSection'
 import { SkillsSection } from '@/components/public/SkillsSection'
+import { AchievementsSection } from '@/components/public/AchievementsSection'
 import { ProjectsSection } from '@/components/public/ProjectsSection'
 import { TestimonialsSection } from '@/components/public/TestimonialsSection'
 import { BlogSection } from '@/components/public/BlogSection'
@@ -22,7 +23,7 @@ function toStr(d: Date | null | undefined): string | undefined {
 }
 
 export default async function HomePage() {
-  const [skills, projects, testimonials, blogPosts] = await Promise.all([
+  const [skills, projects, testimonials, blogPosts, achievements] = await Promise.all([
     prisma.skill.findMany({ orderBy: [{ category: 'asc' }, { order: 'asc' }] }),
     prisma.project.findMany({ where: { featured: true }, orderBy: { createdAt: 'desc' } }),
     prisma.testimonial.findMany({ where: { approved: true }, orderBy: { createdAt: 'desc' } }),
@@ -31,12 +32,22 @@ export default async function HomePage() {
       orderBy: { createdAt: 'desc' },
       include: { comments: true },
     }),
+    prisma.achievement.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'desc' }] }),
   ])
 
   return (
     <>
       <HeroSection />
       <AboutSection />
+      <AchievementsSection achievements={achievements.map(a => ({
+        ...a,
+        description: a.description ?? undefined,
+        issuer: a.issuer ?? undefined,
+        date: a.date ? a.date.toISOString() : undefined,
+        icon: a.icon ?? undefined,
+        url: a.url ?? undefined,
+        createdAt: a.createdAt.toISOString(),
+      })) as Achievement[]} />
       <SkillsSection skills={skills.map(s => ({
         ...s,
         category: s.category ?? 'General',

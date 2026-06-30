@@ -187,6 +187,20 @@ async function main() {
     }
   }
 
+  // Achievements
+  const achievementCount = await prisma.achievement.count()
+  if (achievementCount === 0) {
+    const achievements = [
+      { title: 'AWS Certified Solutions Architect', description: 'Professional-level certification for designing distributed systems on AWS.', issuer: 'Amazon Web Services', date: new Date('2025-11-15'), category: 'certification', order: 1 },
+      { title: 'Google Professional Data Engineer', description: 'Certification for designing and building data processing systems on GCP.', issuer: 'Google Cloud', date: new Date('2026-02-20'), category: 'certification', order: 2 },
+      { title: 'Best Innovation in AI - 2026', description: 'First place in an AI innovation challenge for an autonomous analytics system.', issuer: 'TechCrunch Disrupt', date: new Date('2026-05-10'), category: 'achievement', order: 3 },
+      { title: 'Published: Deep Learning for Real-Time Analytics', description: 'Co-authored research paper published in the Journal of Machine Learning Research.', issuer: 'JMLR', date: new Date('2026-03-01'), category: 'publication', order: 4 },
+    ]
+    for (const a of achievements) {
+      await prisma.achievement.create({ data: a })
+    }
+  }
+
   // Settings
   const existingSettings = await prisma.siteSettings.findFirst()
   if (!existingSettings) {
@@ -210,6 +224,7 @@ async function main() {
   console.log(`  - ${await prisma.project.count()} projects`)
   console.log(`  - ${await prisma.blogPost.count()} blog posts`)
   console.log(`  - ${await prisma.testimonial.count()} testimonials`)
+  console.log(`  - ${await prisma.achievement.count()} achievements`)
   console.log('Admin login: admin@kelvin.com / admin123')
 }
 

@@ -86,6 +86,15 @@ export const api = {
     delete: (id: string) =>
       fetchAPI<void>(`/resume/${id}`, { method: 'DELETE' }),
   },
+  achievements: {
+    list: () => fetchAPI<import('@/types').Achievement[]>('/achievements'),
+    create: (data: Partial<import('@/types').Achievement>) =>
+      fetchAPI<import('@/types').Achievement>('/achievements', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: Partial<import('@/types').Achievement>) =>
+      fetchAPI<import('@/types').Achievement>(`/achievements/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    delete: (id: string) =>
+      fetchAPI<void>(`/achievements/${id}`, { method: 'DELETE' }),
+  },
   analytics: {
     get: () => fetchAPI<import('@/types').DashboardStats>('/analytics'),
     track: (data: import('@/types').AnalyticsEvent) =>

@@ -138,6 +138,19 @@ export interface SEOSettings {
   googleAnalyticsId?: string
 }
 
+export interface Achievement {
+  id: string
+  title: string
+  description?: string
+  issuer?: string
+  date?: string
+  category: string
+  icon?: string
+  url?: string
+  order: number
+  createdAt: string
+}
+
 export interface AnalyticsEvent {
   page: string
   event: string

@@ -6,7 +6,7 @@ import { signOut } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, FolderKanban, FileText, BarChart3, Settings,
-  MessageSquare, Image, FileUp, LogOut, ChevronLeft, Star, GraduationCap
+  MessageSquare, Image, FileUp, LogOut, ChevronLeft, Star, GraduationCap, Trophy
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -16,6 +16,7 @@ const navItems = [
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/skills', label: 'Skills', icon: GraduationCap },
   { href: '/admin/testimonials', label: 'Testimonials', icon: Star },
+  { href: '/admin/achievements', label: 'Achievements', icon: Trophy },
   { href: '/admin/media', label: 'Media', icon: Image },
   { href: '/admin/resume', label: 'Resume', icon: FileUp },
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
