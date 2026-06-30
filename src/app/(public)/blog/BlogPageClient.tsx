@@ -25,8 +25,8 @@ export function BlogPageClient({ posts }: { posts: (BlogPost & { readTime: strin
     <div className="min-h-screen pt-24 pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <h1 className="text-4xl font-bold text-white sm:text-5xl">Blog</h1>
-          <p className="mt-4 text-lg text-gray-400">Thoughts on technology, engineering, and innovation.</p>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl">Blog</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Thoughts on technology, engineering, and innovation.</p>
         </motion.div>
 
         <div className="mb-8 flex flex-wrap gap-4">
@@ -37,7 +37,7 @@ export function BlogPageClient({ posts }: { posts: (BlogPost & { readTime: strin
               placeholder="Search posts..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-gray-700 bg-dark-200/50 pl-10 pr-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:border-primary-500/50 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+              className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-200/50 pl-10 pr-4 py-2.5 text-sm text-gray-700 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500/50 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -47,8 +47,8 @@ export function BlogPageClient({ posts }: { posts: (BlogPost & { readTime: strin
                 onClick={() => setActiveCategory(cat)}
                 className={`rounded-xl px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === cat
-                    ? 'bg-primary-500/20 text-primary-400 border border-primary-500/30'
-                    : 'border border-gray-700 bg-dark-200/50 text-gray-400 hover:text-white'
+                    ? 'bg-primary-500/10 dark:bg-primary-500/20 text-primary-700 dark:text-primary-400 border border-primary-500/30'
+                    : 'border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-200/50 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 {cat}
@@ -74,15 +74,15 @@ export function BlogPageClient({ posts }: { posts: (BlogPost & { readTime: strin
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <Link href={`/blog/${post.slug}`} className="group block glass-card p-6 h-full transition-all duration-300 hover:border-primary-500/30 hover:shadow-xl">
+                <Link href={`/blog/${post.slug}`} className="group block glass-card p-6 h-full transition-all duration-300 hover:border-primary-500/30 hover:shadow-xl hover:-translate-y-1">
                   <div className="mb-3">
                     <Badge variant="primary">{post.category}</Badge>
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold text-white group-hover:text-primary-400 transition-colors line-clamp-2">
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
                     {post.title}
                   </h3>
-                  <p className="mb-4 text-sm text-gray-400 leading-relaxed line-clamp-2">{post.excerpt}</p>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                  <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2">{post.excerpt}</p>
+                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-500">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" /> {new Date(post.publishedAt || post.createdAt).toISOString().split('T')[0]}
                     </span>
