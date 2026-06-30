@@ -70,11 +70,16 @@ export default function AdminSettingsPage() {
       formData.append('files', file)
       formData.append('folder', 'portfolio/profile')
       const res = await fetch('/api/media/upload', { method: 'POST', body: formData })
-      if (!res.ok) throw new Error('Upload failed')
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Upload failed' }))
+        throw new Error(err.details || err.error || 'Upload failed')
+      }
       const uploaded = await res.json()
       const url = uploaded[0]?.url
       if (url) setForm({ ...form, profilePhotos: [...form.profilePhotos, url] })
-    } catch {} finally {
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
       setUploadingPhoto(false)
       e.target.value = ''
     }
@@ -85,6 +90,7 @@ export default function AdminSettingsPage() {
     setSaving(true)
     try {
       await api.settings.update({
+        profilePhotos: form.profilePhotos,
         siteName: form.siteName,
         title: form.title,
         bio: form.bio,
