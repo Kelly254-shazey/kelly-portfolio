@@ -13,6 +13,8 @@ export function AdminHeader({ onMenuClick }: { onMenuClick?: () => void }) {
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
+          aria-label="Open navigation menu"
+          title="Open navigation menu"
           className="rounded-lg p-2 text-gray-400 hover:text-white hover:bg-dark-200 transition-all lg:hidden"
         >
           <Menu className="h-5 w-5" />
@@ -28,7 +30,11 @@ export function AdminHeader({ onMenuClick }: { onMenuClick?: () => void }) {
           <ExternalLink className="h-3.5 w-3.5" />
           <span className="max-sm:hidden">View Site</span>
         </Link>
-        <button className="rounded-lg p-2 text-gray-400 hover:text-white hover:bg-dark-200 transition-all">
+        <button
+          aria-label="View notifications"
+          title="View notifications"
+          className="rounded-lg p-2 text-gray-400 hover:text-white hover:bg-dark-200 transition-all"
+        >
           <Bell className="h-5 w-5" />
         </button>
         <div className="flex items-center gap-3">

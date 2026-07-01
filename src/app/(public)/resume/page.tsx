@@ -29,11 +29,17 @@ export default async function ResumePage() {
               </Button>
             </Link>
             {resume?.url ? (
-              <Link href={resume.url} target="_blank" rel="noreferrer" className="inline-flex">
-                <Button variant="primary" icon={<Download className="h-4 w-4" />}>
-                  Download PDF
+              resume.downloadEnabled ? (
+                <Link href="/api/resume/download" className="inline-flex">
+                  <Button variant="primary" icon={<Download className="h-4 w-4" />}>
+                    Download PDF
+                  </Button>
+                </Link>
+              ) : (
+                <Button variant="secondary" icon={<Download className="h-4 w-4" />} disabled>
+                  Download Disabled
                 </Button>
-              </Link>
+              )
             ) : null}
           </div>
         </div>

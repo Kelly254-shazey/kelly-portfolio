@@ -50,12 +50,16 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
+              aria-label="Close sidebar"
+              title="Close sidebar"
               className="rounded-lg p-1.5 text-gray-500 hover:text-white hover:bg-dark-200 transition-all lg:hidden"
             >
               <X className="h-4 w-4" />
             </button>
             <button
               onClick={() => setCollapsed(!collapsed)}
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               className="rounded-lg p-1.5 text-gray-500 hover:text-white hover:bg-dark-200 transition-all max-lg:hidden"
             >
               <ChevronLeft className={cn('h-4 w-4 transition-transform', collapsed && 'rotate-180')} />

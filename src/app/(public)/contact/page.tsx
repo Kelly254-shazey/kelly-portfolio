@@ -54,10 +54,20 @@ export default function ContactPage() {
               <p className="text-xs text-gray-500 mb-3">Social Links</p>
               <div className="flex gap-2">
                   {[
-                    { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
-                    { href: 'https://wa.me/254741178450', icon: MessageCircle },
+                    { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon, label: 'GitHub' },
+                    { href: 'https://wa.me/254741178450', icon: MessageCircle, label: 'WhatsApp' },
                   ].map((s, i) => (
-                    <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" className="rounded-lg p-2 text-gray-500 dark:text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"><s.icon className="h-5 w-5" /></a>
+                    <a
+                      key={i}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      title={s.label}
+                      className="rounded-lg p-2 text-gray-500 dark:text-gray-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"
+                    >
+                      <s.icon className="h-5 w-5" />
+                    </a>
                   ))}
               </div>
             </div>

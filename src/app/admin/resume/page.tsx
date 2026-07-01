@@ -69,6 +69,13 @@ export default function AdminResumePage() {
     } catch {}
   }
 
+  const handleToggleDownload = async (resume: Resume) => {
+    try {
+      await api.resume.update(resume.id, { downloadEnabled: !resume.downloadEnabled })
+      setResumes(resumes.map((r) => (r.id === resume.id ? { ...r, downloadEnabled: !r.downloadEnabled } : r)))
+    } catch {}
+  }
+
   const handleDelete = async () => {
     if (!deleteId) return
     try {
@@ -82,7 +89,7 @@ export default function AdminResumePage() {
 
   return (
     <div className="space-y-6">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Resume</h1>
           <p className="text-gray-500 mt-1">Manage your CV/resume files.</p>
@@ -121,50 +128,60 @@ export default function AdminResumePage() {
         />
       ) : (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-700/50">
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Name</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Version</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Downloads</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Active</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Uploaded</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-gray-400">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {resumes.map((resume) => (
-                <tr key={resume.id} className="border-b border-gray-700/30 hover:bg-dark-200/50 transition-colors">
-                  <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-white">{resume.name}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm text-gray-400">{resume.version}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-1 text-sm text-gray-400">
-                      <Download className="h-3 w-3" /> {resume.downloads}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <button onClick={() => handleToggleActive(resume)}>
-                      {resume.active
-                        ? <CheckCircle className="h-5 w-5 text-green-400" />
-                        : <XCircle className="h-5 w-5 text-gray-600" />}
-                    </button>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm text-gray-500">{formatDate(resume.createdAt)}</span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <Button variant="ghost" size="sm" onClick={() => setDeleteId(resume.id)}>
-                      <Trash2 className="h-4 w-4 text-red-400" />
-                    </Button>
-                  </td>
+          <div className="min-w-[780px]">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-700/50">
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Name</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Version</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Downloads</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Active</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Download</th>
+                  <th className="text-left px-6 py-4 text-sm font-medium text-gray-400">Uploaded</th>
+                  <th className="text-right px-6 py-4 text-sm font-medium text-gray-400">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {resumes.map((resume) => (
+                  <tr key={resume.id} className="border-b border-gray-700/30 hover:bg-dark-200/50 transition-colors">
+                    <td className="px-6 py-4 min-w-[160px]">
+                      <span className="text-sm font-medium text-white">{resume.name}</span>
+                    </td>
+                    <td className="px-6 py-4 min-w-[100px]">
+                      <span className="text-sm text-gray-400">{resume.version}</span>
+                    </td>
+                    <td className="px-6 py-4 min-w-[110px]">
+                      <div className="flex items-center gap-1 text-sm text-gray-400">
+                        <Download className="h-3 w-3" /> {resume.downloads}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 min-w-[80px]">
+                      <button onClick={() => handleToggleActive(resume)}>
+                        {resume.active
+                          ? <CheckCircle className="h-5 w-5 text-green-400" />
+                          : <XCircle className="h-5 w-5 text-gray-600" />}
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 min-w-[100px]">
+                      <button onClick={() => handleToggleDownload(resume)}>
+                        {resume.downloadEnabled
+                          ? <CheckCircle className="h-5 w-5 text-teal-400" />
+                          : <XCircle className="h-5 w-5 text-gray-600" />}
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 min-w-[140px]">
+                      <span className="text-sm text-gray-500">{formatDate(resume.createdAt)}</span>
+                    </td>
+                    <td className="px-6 py-4 text-right min-w-[100px]">
+                      <Button variant="ghost" size="sm" onClick={() => setDeleteId(resume.id)}>
+                        <Trash2 className="h-4 w-4 text-red-400" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </motion.div>
       )}
 

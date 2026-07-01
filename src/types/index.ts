@@ -93,6 +93,7 @@ export interface Resume {
   version: string
   downloads: number
   active: boolean
+  downloadEnabled: boolean
   createdAt: string
 }
 

@@ -8,7 +8,11 @@ export async function GET() {
     })
 
     if (!resume) {
-      return Response.json({ error: 'No resume available' }, { status: 404 })
+      return Response.json({ error: 'No resume available' }, { status: 404, headers: { 'Cache-Control': 'no-store, max-age=0' } })
+    }
+
+    if (!resume.downloadEnabled) {
+      return Response.json({ error: 'Download is disabled by admin' }, { status: 403, headers: { 'Cache-Control': 'no-store, max-age=0' } })
     }
 
     await prisma.resume.update({

@@ -110,14 +110,16 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
             >
               <span className="text-sm text-gray-500">Connect:</span>
               {[
-                { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon },
-                { href: 'https://wa.me/254741178450', icon: MessageCircle },
+                { href: 'https://github.com/Kelly254-shazey', icon: GithubIcon, label: 'GitHub' },
+                { href: 'https://wa.me/254741178450', icon: MessageCircle, label: 'WhatsApp' },
               ].map((social) => (
                 <a
                   key={social.href}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.label}
+                  title={social.label}
                   className="rounded-lg p-2 text-gray-500 hover:text-primary-600 hover:bg-gray-100 transition-all"
                 >
                   <social.icon className="h-5 w-5" />

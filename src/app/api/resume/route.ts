@@ -1,12 +1,10 @@
+import fs from 'fs/promises'
+import path from 'path'
+import { randomUUID } from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
-import { v2 as cloudinary } from 'cloudinary'
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'resumes')
 
 export async function GET() {
   try {
@@ -42,18 +40,15 @@ export async function POST(req: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer())
-    const result = await new Promise<any>((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: 'portfolio/resume', resource_type: 'auto' },
-        (err, result) => (err ? reject(err) : resolve(result))
-      )
-      stream.end(buffer)
-    })
+    const extension = path.extname(file.name) || '.pdf'
+    const fileName = `${randomUUID()}${extension}`
+    await fs.mkdir(uploadsDir, { recursive: true })
+    await fs.writeFile(path.join(uploadsDir, fileName), buffer)
 
     const resume = await prisma.resume.create({
       data: {
         name: file.name,
-        url: result.secure_url,
+        url: `/uploads/resumes/${fileName}`,
         version,
       },
     })
