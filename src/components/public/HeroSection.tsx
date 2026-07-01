@@ -151,13 +151,17 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
                     {profilePhotos.length > 1 && (
                       <>
                         <button
+                          type="button"
                           onClick={() => setPhotoIndex((prev) => (prev - 1 + profilePhotos.length) % profilePhotos.length)}
+                          aria-label="Previous photo"
                           className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-dark-900/60 p-1.5 text-white hover:bg-dark-900/80 transition-colors"
                         >
                           <ChevronLeft className="h-4 w-4" />
                         </button>
                         <button
+                          type="button"
                           onClick={() => setPhotoIndex((prev) => (prev + 1) % profilePhotos.length)}
+                          aria-label="Next photo"
                           className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-dark-900/60 p-1.5 text-white hover:bg-dark-900/80 transition-colors"
                         >
                           <ChevronRight className="h-4 w-4" />
@@ -166,7 +170,9 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
                           {profilePhotos.map((_, i) => (
                             <button
                               key={i}
+                              type="button"
                               onClick={() => setPhotoIndex(i)}
+                              aria-label={`View photo ${i + 1}`}
                               className={`h-1.5 rounded-full transition-all ${
                                 i === photoIndex ? 'w-4 bg-primary-400' : 'w-1.5 bg-white/40'
                               }`}

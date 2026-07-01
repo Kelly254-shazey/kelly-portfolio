@@ -51,7 +51,7 @@ export function Navigation() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-6 sm:py-4">
-        <Link href="/" className="relative z-10 flex items-center gap-2 sm:gap-3">
+        <Link href="/" onClick={() => setIsOpen(false)} className="relative z-10 flex items-center gap-2 sm:gap-3">
           <img src="https://res.cloudinary.com/dqdyjocsq/image/upload/v1782859642/eeb72548-daf3-4a63-925f-1cd39b5f9008.png" alt="Vidamiaa" className="w-auto h-[28px] sm:h-[40px] object-contain drop-shadow-lg" />
           <span className="text-lg sm:text-2xl font-bold tracking-tight text-gradient-brand">vidamiaa</span>
         </Link>
@@ -120,6 +120,7 @@ export function Navigation() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    onClick={() => setIsOpen(false)}
                     className={cn(
                       'rounded-xl px-4 py-3.5 text-base font-medium transition-all duration-200',
                       pathname === link.href
