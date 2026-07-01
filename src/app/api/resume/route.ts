@@ -13,9 +13,18 @@ export async function GET() {
     const resumes = await prisma.resume.findMany({
       orderBy: { createdAt: 'desc' },
     })
-    return Response.json(resumes)
+    return Response.json(resumes, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    })
   } catch (error) {
-    return Response.json({ error: 'Failed to fetch resumes' }, { status: 500 })
+    return Response.json({ error: 'Failed to fetch resumes' }, {
+      status: 500,
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    })
   }
 }
 

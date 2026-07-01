@@ -1,14 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowDown, Download, Mail, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/Icons'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 
-function handleReadResume() {
-  window.open('/api/resume/download', '_blank')
+function useReadResume() {
+  const router = useRouter()
+  return () => router.push('/resume')
 }
 
 const roles = [
@@ -40,8 +42,12 @@ export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profileP
     return () => clearInterval(interval)
   }, [profilePhotos.length])
 
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+export function HeroSection({ profilePhotos = [], resumeUrl = null }: { profilePhotos?: string[]; resumeUrl?: string | null }) {
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [photoIndex, setPhotoIndex] = useState(0)
+  const handleReadResume = useReadResume()
+
+  useEffect(() => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 dark:from-primary-500/10 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-500/5 dark:from-primary-500/10 via-transparent to-transparent" />
       

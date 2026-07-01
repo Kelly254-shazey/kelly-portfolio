@@ -16,8 +16,19 @@ export async function GET() {
       data: { downloads: { increment: 1 } },
     })
 
-    return Response.redirect(resume.url, 302)
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: resume.url,
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    })
   } catch (error) {
-    return Response.json({ error: 'Failed to download resume' }, { status: 500 })
+    return Response.json({ error: 'Failed to download resume' }, {
+      status: 500,
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    })
   }
 }

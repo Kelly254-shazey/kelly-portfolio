@@ -78,17 +78,17 @@ export const api = {
       fetchAPI<void>(`/media/${id}`, { method: 'DELETE' }),
   },
   resume: {
-    list: () => fetchAPI<import('@/types').Resume[]>('/resume'),
+    list: () => fetchAPI<import('@/types').Resume[]>('/resume', { cache: 'no-store' }),
     upload: async (formData: FormData) => {
-      const res = await fetch('/api/resume', { method: 'POST', body: formData })
+      const res = await fetch('/api/resume', { method: 'POST', body: formData, cache: 'no-store' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.details || data.error || `Upload failed (${res.status})`)
       return data
     },
     update: (id: string, data: Partial<import('@/types').Resume>) =>
-      fetchAPI<import('@/types').Resume>(`/resume/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+      fetchAPI<import('@/types').Resume>(`/resume/${id}`, { method: 'PUT', body: JSON.stringify(data), cache: 'no-store' }),
     delete: (id: string) =>
-      fetchAPI<void>(`/resume/${id}`, { method: 'DELETE' }),
+      fetchAPI<void>(`/resume/${id}`, { method: 'DELETE', cache: 'no-store' }),
   },
   achievements: {
     list: () => fetchAPI<import('@/types').Achievement[]>('/achievements'),
