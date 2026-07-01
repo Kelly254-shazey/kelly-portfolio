@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { Upload, Trash2, Download, CheckCircle, XCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
 import { Modal } from '@/components/ui/Modal'
 import { PageLoading } from '@/components/ui/Loading'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -31,7 +30,20 @@ export default function AdminResumePage() {
     }
   }
 
-  useEffect(() => { fetchResumes() }, [])
+  useEffect(() => {
+    const loadResumes = async () => {
+      try {
+        const data = await api.resume.list()
+        setResumes(data)
+      } catch {
+        setResumes([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    void loadResumes()
+  }, [])
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -76,7 +88,11 @@ export default function AdminResumePage() {
           <p className="text-gray-500 mt-1">Manage your CV/resume files.</p>
         </div>
         <div>
+          <label htmlFor="resume-upload" className="sr-only">
+            Upload resume file
+          </label>
           <input
+            id="resume-upload"
             ref={fileInputRef}
             type="file"
             accept=".pdf,.doc,.docx"

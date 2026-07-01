@@ -4,8 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sun, Moon } from 'lucide-react'
-import { useTheme } from '@/components/layout/ThemeProvider'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -23,7 +22,6 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -64,33 +62,19 @@ export function Navigation() {
               className={cn(
                 'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
                 pathname === link.href
-                  ? 'text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-500/10'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200'
+                  ? 'text-primary-600 bg-primary-100'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               )}
             >
               {link.label}
             </Link>
           ))}
-          <button
-            onClick={toggleTheme}
-            className="ml-2 rounded-lg p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
           <button
-            onClick={toggleTheme}
-            className="rounded-lg p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-          </button>
-          <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-dark-200 transition-all"
+            className="rounded-lg p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-all"
             aria-label="Menu"
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

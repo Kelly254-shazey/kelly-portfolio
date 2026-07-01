@@ -3,5 +3,5 @@
 import { ThemeProvider } from './ThemeProvider'
 
 export function PublicProviders({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider>{children}</ThemeProvider>
+  return <ThemeProvider forceTheme="light">{children}</ThemeProvider>
 }
